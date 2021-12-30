@@ -1,8 +1,19 @@
-let div = document.createElement('div');
-
+let div = document.createElement("div");
 div.innerHTML = "<button>Download</button>";
-// better to use CSS though - just set class
-// div.setAttribute('class', 'myclass'); // and make sure myclass has some styles in css
 
-//div.addEventListener("click", function(e) {console.log("hello world")});
+function handleResponse(message) {
+	console.log(message);
+};
+
+function handleError(error) {
+    console.log(`Error: ${error}`);
+};
+
+function download (e) {
+  let sending = browser.runtime.sendMessage({
+    obj: "hi"
+  });
+  sending.then(handleResponse, handleError);
+};
+div.addEventListener("click", download);
 document.getElementById("top-level-buttons-computed").appendChild(div);

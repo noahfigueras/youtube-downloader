@@ -8,11 +8,23 @@ function listener(details) {
     url = url.split("&range=")[0];
     if(!arr.includes(url)){
       arr.push(url);
-      browser.downloads.download({url: url});
     }
   }
 };
 
+function handleMessage(request, sender, sendResponse) {
+	console.log("Window Object:", request.obj);
+	if(arr.length > 0) {
+		browser.downloads.download({url: arr[0]});
+  	sendResponse({response: "Download Started"});
+	}
+  sendResponse({response: "Failed Download please reload page"});
+}
+
+// Listen on Download Button from injected script
+browser.runtime.onMessage.addListener(handleMessage);
+
+// Listen to Youtube Video Url Links
 browser.webRequest.onSendHeaders.addListener(
   listener,
   {
