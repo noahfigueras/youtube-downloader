@@ -3,16 +3,15 @@
   "description": "Download Youtube music and videos with one-click.",
   "version": "1.0",
   "manifest_version": 2,
-	"content_scripts": [
-    {
-      "matches": ["*://*.youtube.com/watch*"],
-      "js": ["content-script.js"]
-    }
-  ],
-	"background": {
-		"scripts": ["background-script.js"]
-	},
-  "permissions": ["downloads", "webRequest", "<all_urls>"],
+  "browser_action": {
+    "default_icon": "/images/get_started32.png",
+    "default_title": "Youtube-Downloader",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background-script.js"]
+  },
+  "permissions": ["tabs", "downloads", "webRequest", "<all_urls>"],
   "icons": {
     "16": "/images/get_started16.png",
     "32": "/images/get_started32.png",

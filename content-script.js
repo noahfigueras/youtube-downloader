@@ -1,6 +1,3 @@
-let div = document.createElement("div");
-div.innerHTML = "<button>Download</button>";
-
 function handleResponse(message) {
 	console.log(message);
 };
@@ -11,9 +8,10 @@ function handleError(error) {
 
 function download (e) {
   let sending = browser.runtime.sendMessage({
-    obj: "hi"
+    obj: "audio"
   });
   sending.then(handleResponse, handleError);
 };
-div.addEventListener("click", download);
-document.getElementById("top-level-buttons-computed").appendChild(div);
+
+document.getElementById('audio').addEventListener("click", download);
+console.log("Fuck you");

@@ -5,6 +5,11 @@ function listener(details) {
   let url = details.url;
   let id = details.originUrl;
   if(url.includes("mime=audio%2Fwebm")){
+		console.log("himin")
+		browser.tabs.executeScript(2, {file: "content-script.js"})
+		.then(console.log("executed"))
+		.catch(console.log("error"));
+		console.log("himax")
     url = url.split("&range=")[0];
     if(!arr.includes(url)){
       arr.push(url);
@@ -30,3 +35,5 @@ browser.webRequest.onSendHeaders.addListener(
   {
     urls: ["https://*.googlevideo.com/videoplayback?expire=*"],
   },["requestHeaders"]);
+
+console.log("background script");
