@@ -6,12 +6,11 @@ function handleError(error) {
     console.log(`Error: ${error}`);
 };
 
-function download (e) {
+function download () {
   let sending = browser.runtime.sendMessage({
     obj: "audio"
   });
   sending.then(handleResponse, handleError);
 };
 
-document.getElementById('audio').addEventListener("click", download);
-console.log("Fuck you");
+document.getElementById('download').addEventListener("click", download);

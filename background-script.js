@@ -1,29 +1,24 @@
 // Listen to requests
-let arr = [];
+let audio;
 
 function listener(details) {
   let url = details.url;
   let id = details.originUrl;
   if(url.includes("mime=audio%2Fwebm")){
-		console.log("himin")
-		browser.tabs.executeScript(2, {file: "content-script.js"})
-		.then(console.log("executed"))
-		.catch(console.log("error"));
-		console.log("himax")
     url = url.split("&range=")[0];
-    if(!arr.includes(url)){
-      arr.push(url);
+    if(audio !== url){
+      audio = url;
+      console.log(audio);
     }
   }
 };
 
 function handleMessage(request, sender, sendResponse) {
-	console.log("Window Object:", request.obj);
-	if(arr.length > 0) {
-		browser.downloads.download({url: arr[0]});
-  	sendResponse({response: "Download Started"});
+	if(request.obj === 'audio'){
+		browser.downloads.download({url: audio, filename: 'download.webm'});
+		return sendResponse({response: "Download Started"});
 	}
-  sendResponse({response: "Failed Download please reload page"});
+  return sendResponse({response: "Failed Download please reload page"});
 }
 
 // Listen on Download Button from injected script
@@ -36,4 +31,3 @@ browser.webRequest.onSendHeaders.addListener(
     urls: ["https://*.googlevideo.com/videoplayback?expire=*"],
   },["requestHeaders"]);
 
-console.log("background script");
